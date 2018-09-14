@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbelt.Blazor.HttpClientInterceptor", "Toolbelt.Blazor.HttpClientInterceptor\Toolbelt.Blazor.HttpClientInterceptor.csproj", "{382E625B-7D25-4515-BFEA-5F48384B4FF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolbelt.Blazor.HttpClientInterceptor", "Toolbelt.Blazor.HttpClientInterceptor\Toolbelt.Blazor.HttpClientInterceptor.csproj", "{382E625B-7D25-4515-BFEA-5F48384B4FF4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleSite", "SampleSite\SampleSite.csproj", "{E2DA8EDE-614E-4651-800F-B52E389C3B59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{CF03D4A5-B3D2-4DFD-A7E5-62A7F23B8F78}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
