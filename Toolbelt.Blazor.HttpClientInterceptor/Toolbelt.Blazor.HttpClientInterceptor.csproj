@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
+    <Authors>J.Sakamoto</Authors>
+    <Copyright>opyright © 2018 J.Sakamoto, Mozilla Public License 2.0</Copyright>
+    <PackageLicenseUrl>https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/</PackageProjectUrl>
+    <Description>Intercept all of the sending HTTP requests on a client side Blazor application.</Description>
+    <PackageTags>blazor,http,httpclient</PackageTags>
+    <PackageReleaseNotes>v.1.0.0
+- 1st release.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
