@@ -9,7 +9,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 **Step.1** Install the library via NuGet package, like this.
 
 ```shell
-> dotnet install Toolbelt.Blazor.HttpClientInterceptor
+> dotnet add package Toolbelt.Blazor.HttpClientInterceptor
 ```
 
 **Step.2** Register "HttpClientInterceptor" service into the DI container, at `ConfigureService` method in the `Startup` class of your Blazor application.
