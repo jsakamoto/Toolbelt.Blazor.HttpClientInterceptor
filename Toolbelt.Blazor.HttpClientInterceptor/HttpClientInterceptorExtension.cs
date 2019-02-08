@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Microsoft.AspNetCore.Blazor.Builder;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Toolbelt.Blazor.Extensions.DependencyInjection
@@ -25,7 +25,7 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
         ///  Installs a HttpClientInterceptor service to the runtime hosting environment.
         /// </summary>
         /// <param name="app">The Microsoft.AspNetCore.Blazor.Builder.IBlazorApplicationBuilder.</param>
-        public static IBlazorApplicationBuilder UseHttpClientInterceptor(this IBlazorApplicationBuilder app)
+        public static IComponentsApplicationBuilder UseHttpClientInterceptor(this IComponentsApplicationBuilder app)
         {
             var interceptor = app.Services.GetService<HttpClientInterceptor>();
             interceptor.Install(app);

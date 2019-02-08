@@ -28,7 +28,7 @@ public class Startup
 **Step.3** Install "HttpClientInterceptor" service to intercepting works well, at `Configure` method in the `Startup` class of your Blazor application.
 
 ```csharp
-public void Configure(IBlazorApplicationBuilder app)
+public void Configure(IComponentsApplicationBuilder app)
 {
   app.UseHttpClientInterceptor(); // <- Add this line.
   ...
@@ -67,7 +67,12 @@ public void Dispose()
 }
 ```
 
+## Release Note
 
+- **v.3.0.0** - BREAKING CHANGE: Support Blazor v.0.8.0 (not compatible with v.0.7.0 or before.)
+- **v.2.1.0** - Support Blazor v.0.6.0 - it was signed strong name.
+- **v.2.0.0** - BREAKING CHANGE: Fix namespace of HttpClientInterceptorExtension class.
+- **v.1.0.0** - 1st release.
 
 ## License
 
