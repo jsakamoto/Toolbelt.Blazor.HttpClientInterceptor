@@ -1,5 +1,5 @@
 using System;
-using Microsoft.AspNetCore.Blazor.Builder;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Toolbelt.Blazor;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
@@ -14,7 +14,7 @@ namespace SampleSite
             services.AddHttpClientInterceptor();
         }
 
-        public void Configure(IBlazorApplicationBuilder app)
+        public void Configure(IComponentsApplicationBuilder app)
         {
             // Install a HttpClientInterceptor.
             app.UseHttpClientInterceptor();

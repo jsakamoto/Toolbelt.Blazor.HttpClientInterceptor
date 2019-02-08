@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Blazor.Builder;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Toolbelt.Blazor
@@ -32,7 +32,7 @@ namespace Toolbelt.Blazor
             this.SendAsyncMethod = typeof(HttpMessageHandler).GetMethod(nameof(SendAsync), BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        internal void Install(IBlazorApplicationBuilder app)
+        internal void Install(IComponentsApplicationBuilder app)
         {
             if (this.Handler != null) return;
 
