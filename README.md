@@ -1,4 +1,4 @@
-# Blazor HttpClient Interceptor [![NuGet Package](https://img.shields.io/nuget/v/Toolbelt.Blazor.HttpClientInterceptor.svg)](https://www.nuget.org/packages/Toolbelt.Blazor.HttpClientInterceptor/)
+# Blazor (client-side) HttpClient Interceptor [![NuGet Package](https://img.shields.io/nuget/v/Toolbelt.Blazor.HttpClientInterceptor.svg)](https://www.nuget.org/packages/Toolbelt.Blazor.HttpClientInterceptor/)
 
 ## Summary
 
@@ -56,7 +56,7 @@ You can subscribe the events that will occur before/after sending all of the HTT
   ...
 ```
 
-> _Note:_ Please remeber that if you use `HttpClientInterceptor` to subscribe `BeforeSend`/`AfterSend` events **in Blazor components (.cshtml),** you should unsubscribe events when the components is discrded. To do it, you should implement `IDisposable` interface in that component, like this code:
+> _Note:_ Please remember that if you use `HttpClientInterceptor` to subscribe `BeforeSend`/`AfterSend` events **in Blazor components (.razor),** you should unsubscribe events when the components is discarded. To do it, you should implement `IDisposable` interface in that component, like this code:
 
 ```csharp
 @implements IDisposable
