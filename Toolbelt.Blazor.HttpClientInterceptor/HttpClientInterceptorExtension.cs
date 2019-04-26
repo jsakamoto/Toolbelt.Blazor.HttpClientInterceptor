@@ -28,7 +28,7 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
         public static IComponentsApplicationBuilder UseHttpClientInterceptor(this IComponentsApplicationBuilder app)
         {
             var interceptor = app.Services.GetService<HttpClientInterceptor>();
-            interceptor.Install(app);
+            interceptor.Install();
 
             return app;
         }

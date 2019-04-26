@@ -7,11 +7,13 @@
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
     <Authors>J.Sakamoto</Authors>
     <Copyright>Copyright © 2018-2019 J.Sakamoto, Mozilla Public License 2.0</Copyright>
-    <PackageLicenseUrl>https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/</PackageProjectUrl>
     <Description>Intercept all of the sending HTTP requests on a client side Blazor application.</Description>
     <PackageTags>blazor,http,httpclient</PackageTags>
-    <PackageReleaseNotes>v.3.0.0
+    <PackageReleaseNotes>v.4.0.0
+- BREAKING CHANGE: Support Blazor v.3.0.0 Preview 4 (not compatible with v.0.9.0 or before.)
+v.3.0.0
 - BREAKING CHANGE: Support Blazor v.0.8.0 (not compatible with v.0.7.0 or before.)
 v.2.1.0
 - Support Blazor v.0.6.0 - it was signed strong name.
@@ -19,11 +21,12 @@ v.2.0.0
 - BREAKING CHANGE: Fix namespace of HttpClientInterceptorExtension class.
 v.1.0.0
 - 1st release.</PackageReleaseNotes>
-    <Version>3.0.0</Version>
+    <Version>4.0.0.3</Version>
+    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="0.8.0-preview-19104-04" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview4-19216-03" />
   </ItemGroup>
 
 </Project>

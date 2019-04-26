@@ -69,6 +69,7 @@ public void Dispose()
 
 ## Release Note
 
+- **v.4.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 4 (not compatible with v.0.9.0 or before.)
 - **v.3.0.0** - BREAKING CHANGE: Support Blazor v.0.8.0 (not compatible with v.0.7.0 or before.)
 - **v.2.1.0** - Support Blazor v.0.6.0 - it was signed strong name.
 - **v.2.0.0** - BREAKING CHANGE: Fix namespace of HttpClientInterceptorExtension class.

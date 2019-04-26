@@ -32,15 +32,14 @@ namespace Toolbelt.Blazor
             this.SendAsyncMethod = typeof(HttpMessageHandler).GetMethod(nameof(SendAsync), BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        internal void Install(IComponentsApplicationBuilder app)
+        internal void Install()
         {
             if (this.Handler != null) return;
 
-            var httpClient = app.Services.GetService<HttpClient>();
-            var handlerField = typeof(HttpMessageInvoker).GetField("handler", BindingFlags.Instance | BindingFlags.NonPublic);
-            this.Handler = handlerField.GetValue(httpClient) as HttpMessageHandler;
-
-            handlerField.SetValue(httpClient, this);
+            var getHttpMessageHandlerField = typeof(HttpClient).GetField("GetHttpMessageHandler", BindingFlags.Static | BindingFlags.NonPublic);
+            var getHttpMessageHandler = (Func<HttpMessageHandler>)getHttpMessageHandlerField.GetValue(null);
+            this.Handler = getHttpMessageHandler.Invoke();
+            getHttpMessageHandlerField.SetValue(null, (Func<HttpMessageHandler>)(() => this));
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
