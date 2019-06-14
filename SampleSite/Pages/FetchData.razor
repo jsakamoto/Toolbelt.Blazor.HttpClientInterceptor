@@ -34,7 +34,7 @@ else
     </table>
 }
 
-@functions {
+@code {
     WeatherForecast[] forecasts;
 
     protected override async Task OnInitAsync()
@@ -45,8 +45,11 @@ else
     class WeatherForecast
     {
         public DateTime Date { get; set; }
+
         public int TemperatureC { get; set; }
+
         public int TemperatureF { get; set; }
+
         public string Summary { get; set; }
     }
 }
