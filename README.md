@@ -1,8 +1,12 @@
-# Blazor (client-side) HttpClient Interceptor [![NuGet Package](https://img.shields.io/nuget/v/Toolbelt.Blazor.HttpClientInterceptor.svg)](https://www.nuget.org/packages/Toolbelt.Blazor.HttpClientInterceptor/)
+# Blazor WebAssembly (client-side) HttpClient Interceptor [![NuGet Package](https://img.shields.io/nuget/v/Toolbelt.Blazor.HttpClientInterceptor.svg)](https://www.nuget.org/packages/Toolbelt.Blazor.HttpClientInterceptor/)
 
 ## Summary
 
-The class library that intercept all of the sending HTTP requests on a client side Blazor application.
+The class library that intercept all of the sending HTTP requests on a client side Blazor WebAssembly application.
+
+## Supported Blazor versions
+
+"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.5.x supports Blazor WebAssembly App versions **from ver.3.0.0-prevew 6 to preview 8.**
 
 ## How to install and use?
 
@@ -42,8 +46,8 @@ You can subscribe the events that will occur before/after sending all of the HTT
 @using Toolbelt.Blazor
 @inject HttpClientInterceptor Interceptor
 ...
-@functions {
-  protected override void OnInit()
+@code {
+  protected override void OnInitialized()
   {
     this.Interceptor.BeforeSend += Interceptor_BeforeSend;
     ...
