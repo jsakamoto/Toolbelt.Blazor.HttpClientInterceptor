@@ -6,7 +6,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 
 ## Supported Blazor versions
 
-"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.5.x supports Blazor WebAssembly App versions **from ver.3.0 Preview 6 to ver.3.1 Preview 2.**
+"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.6.x supports Blazor WebAssembly App version **3.1 Preview 3.**
 
 ## How to install and use?
 
@@ -27,15 +27,6 @@ public class Startup
   {
     services.AddHttpClientInterceptor(); // <- Add this line.
     ...
-```
-
-**Step.3** Install "HttpClientInterceptor" service to intercepting works well, at `Configure` method in the `Startup` class of your Blazor application.
-
-```csharp
-public void Configure(IComponentsApplicationBuilder app)
-{
-  app.UseHttpClientInterceptor(); // <- Add this line.
-  ...
 ```
 
 That's all.
@@ -73,6 +64,7 @@ public void Dispose()
 
 ## Release Note
 
+- **v.6.0.0** - BREAKING CHANGE: Support Blazor v.3.1.0 Preview 3 (not compatible with v.3.1.0 Preview 2 or before.)
 - **v.5.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 6 (not compatible with v.3.0.0 Preview 5 or before.)
 - **v.4.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 4 (not compatible with v.0.9.0 or before.)
 - **v.3.0.0** - BREAKING CHANGE: Support Blazor v.0.8.0 (not compatible with v.0.7.0 or before.)

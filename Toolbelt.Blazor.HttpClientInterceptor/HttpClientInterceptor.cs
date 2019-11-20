@@ -3,8 +3,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Toolbelt.Blazor
 {
@@ -27,19 +25,10 @@ namespace Toolbelt.Blazor
 
         private readonly MethodInfo SendAsyncMethod;
 
-        internal HttpClientInterceptor()
+        internal HttpClientInterceptor(HttpMessageHandler baseHandler)
         {
             this.SendAsyncMethod = typeof(HttpMessageHandler).GetMethod(nameof(SendAsync), BindingFlags.Instance | BindingFlags.NonPublic);
-        }
-
-        internal void Install()
-        {
-            if (this.Handler != null) return;
-
-            var getHttpMessageHandlerField = typeof(HttpClient).GetField("GetHttpMessageHandler", BindingFlags.Static | BindingFlags.NonPublic);
-            var getHttpMessageHandler = (Func<HttpMessageHandler>)getHttpMessageHandlerField.GetValue(null);
-            this.Handler = getHttpMessageHandler.Invoke();
-            getHttpMessageHandlerField.SetValue(null, (Func<HttpMessageHandler>)(() => this));
+            this.Handler = baseHandler;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -57,6 +46,7 @@ namespace Toolbelt.Blazor
 
         protected override void Dispose(bool disposing)
         {
+            Handler?.Dispose();
             base.Dispose(disposing);
         }
     }

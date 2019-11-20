@@ -16,9 +16,6 @@ namespace SampleSite
 
         public void Configure(IComponentsApplicationBuilder app)
         {
-            // Install a HttpClientInterceptor.
-            app.UseHttpClientInterceptor();
-
             // Subscribe HttpClientInterceptor's events.
             var httpInterceptor = app.Services.GetService<HttpClientInterceptor>();
             httpInterceptor.BeforeSend += OnBeforeSend;
