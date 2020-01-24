@@ -6,7 +6,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 
 ## Supported Blazor versions
 
-"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.6.x supports Blazor WebAssembly App version **3.1 Preview 3.**
+"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.6.x supports Blazor WebAssembly App version **3.1 Preview 3, and 4.**
 
 ## How to install and use?
 
@@ -44,7 +44,7 @@ You can subscribe the events that will occur before/after sending all of the HTT
     ...
   }
 
-  void Interceptor_BeforeSend(object sender, EventArgs e)
+  void Interceptor_BeforeSend(object sender, HttpClientInterceptorEventArgs e)
   {
     // Do something here what you want to do.
   }
@@ -62,8 +62,24 @@ public void Dispose()
 }
 ```
 
+### The arguments of event handler
+
+The event handler for `BeforeSend`/`AfterSend` events can be received `HttpClientInterceptorEventArgs` object.
+
+The `HttpClientInterceptorEventArgs` object provides you to a request object and a response object that is come from an intercepted HttpClinet request.
+
+```csharp
+void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
+{
+  if (!args.Response?.IsSuccessStatusCode) {
+    // Do somthing here for handle all errors of HttpClient requests.
+  }
+}
+```
+
 ## Release Note
 
+- **v.6.1.0** - The event handler arguments now provides a request object and a response object.
 - **v.6.0.0** - BREAKING CHANGE: Support Blazor v.3.1.0 Preview 3 (not compatible with v.3.1.0 Preview 2 or before.)
 - **v.5.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 6 (not compatible with v.3.0.0 Preview 5 or before.)
 - **v.4.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 4 (not compatible with v.0.9.0 or before.)

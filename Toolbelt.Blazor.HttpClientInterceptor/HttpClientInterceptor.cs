@@ -14,12 +14,12 @@ namespace Toolbelt.Blazor
         /// <summary>
         /// Occurs before a HTTP request sending.
         /// </summary>
-        public event EventHandler BeforeSend;
+        public event EventHandler<HttpClientInterceptorEventArgs> BeforeSend;
 
         /// <summary>
         /// Occurs after received a response of a HTTP request. (include it wasn't succeeded.)
         /// </summary>
-        public event EventHandler AfterSend;
+        public event EventHandler<HttpClientInterceptorEventArgs> AfterSend;
 
         private HttpMessageHandler Handler;
 
@@ -33,14 +33,16 @@ namespace Toolbelt.Blazor
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            var response = default(HttpResponseMessage);
             try
             {
-                this.BeforeSend?.Invoke(this, EventArgs.Empty);
-                return await (this.SendAsyncMethod.Invoke(this.Handler, new object[] { request, cancellationToken }) as Task<HttpResponseMessage>);
+                this.BeforeSend?.Invoke(this, new HttpClientInterceptorEventArgs(request, response));
+                response = await (this.SendAsyncMethod.Invoke(this.Handler, new object[] { request, cancellationToken }) as Task<HttpResponseMessage>);
+                return response;
             }
             finally
             {
-                this.AfterSend?.Invoke(this, EventArgs.Empty);
+                this.AfterSend?.Invoke(this, new HttpClientInterceptorEventArgs(request, response));
             }
         }
 

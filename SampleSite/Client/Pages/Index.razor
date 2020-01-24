@@ -1,0 +1,32 @@
+﻿@page "/"
+@inject HttpClient HttpClient
+
+<h1>Toolbelt.Blazor.HttpClientInterceptor - Demonstration</h1>
+
+<ol>
+    <li>Please enter Ctrl + Shift + I to open the browser's developer tools.</li>
+    <li>Open console pane of the developer tools.</li>
+    <li>
+        Visit <NavLink href="/fetchdata">"Fetch data"</NavLink> page,
+        or <button class="btn btn-primary" @onclick="OnClickRequestToHTTP404API">click here</button> to request to "HTTP 404 NotFound" API.
+    </li>
+</ol>
+
+<p>After that, you can see the console messages that have been fired from the HttpClientInterceptor's events.</p>
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code
+{
+    public async Task OnClickRequestToHTTP404API()
+    {
+        try
+        {
+            await HttpClient.GetJsonAsync<object>("/api/notfound");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+}

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Toolbelt.Blazor;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 
-namespace SampleSite
+namespace SampleSite.Client
 {
     public class Startup
     {
@@ -24,14 +24,18 @@ namespace SampleSite
             app.AddComponent<App>("app");
         }
 
-        private void OnBeforeSend(object sender, EventArgs args)
+        private void OnBeforeSend(object sender, HttpClientInterceptorEventArgs args)
         {
             Console.WriteLine("BeforeSend event of HttpClientInterceptor");
+            Console.WriteLine($"  - {args.Request.Method} {args.Request.RequestUri}");
+
         }
 
-        private void OnAfterSend(object sender, EventArgs args)
+        private void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
         {
             Console.WriteLine("AfterSend event of HttpClientInterceptor");
+            Console.WriteLine($"  - {args.Request.Method} {args.Request.RequestUri}");
+            Console.WriteLine($"  - HTTP Status {args.Response?.StatusCode}");
         }
     }
 }
