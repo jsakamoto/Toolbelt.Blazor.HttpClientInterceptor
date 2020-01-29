@@ -6,7 +6,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 
 ## Supported Blazor versions
 
-"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.6.x supports Blazor WebAssembly App version **3.1 Preview 3, and 4.**
+"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.7.x supports Blazor WebAssembly App version **3.2 Preview 1.**
 
 ## How to install and use?
 
@@ -16,16 +16,18 @@ The class library that intercept all of the sending HTTP requests on a client si
 > dotnet add package Toolbelt.Blazor.HttpClientInterceptor
 ```
 
-**Step.2** Register "HttpClientInterceptor" service into the DI container, at `ConfigureService` method in the `Startup` class of your Blazor application.
+**Step.2** Register "HttpClientInterceptor" service into the DI container, at `Main()` method in the `Program` class of your Blazor application.
 
 ```csharp
 using Toolbelt.Blazor.Extensions.DependencyInjection; // <- Add this, and...
 ...
-public class Startup
+public class Program
 {
-  public void ConfigureServices(IServiceCollection services)
+  public static async Task Main(string[] args)
   {
-    services.AddHttpClientInterceptor(); // <- Add this line.
+    var builder = WebAssemblyHostBuilder.CreateDefault(args);
+    builder.RootComponents.Add<App>("app");
+    builder.Services.AddHttpClientInterceptor(); // <- Add this!
     ...
 ```
 
@@ -79,6 +81,7 @@ void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
 
 ## Release Note
 
+- **v.7.0.0** - BREAKING CHANGE: Support Blazor v.3.2.0 Preview 1 (not compatible with v.3.1.0 Preview 4 or before.)
 - **v.6.1.0** - The event handler arguments now provides a request object and a response object.
 - **v.6.0.0** - BREAKING CHANGE: Support Blazor v.3.1.0 Preview 3 (not compatible with v.3.1.0 Preview 2 or before.)
 - **v.5.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 6 (not compatible with v.3.0.0 Preview 5 or before.)

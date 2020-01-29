@@ -1,8 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -36,17 +34,6 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
                     BaseAddress = new Uri(naviManager.BaseUri)
                 };
             });
-        }
-
-        /// <summary>
-        ///  [Deprecated] Please remove calling UseHttpClientInterceptor(). This method has no longer any effects.
-        /// </summary>
-        /// <param name="app">The Microsoft.AspNetCore.Blazor.Builder.IBlazorApplicationBuilder.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Please remove calling UseHttpClientInterceptor(). This method has no longer any effects.")]
-        public static IComponentsApplicationBuilder UseHttpClientInterceptor(this IComponentsApplicationBuilder app)
-        {
-            return app;
         }
     }
 }
