@@ -1,10 +1,11 @@
 {
+  "useWebAssemblyDebugging": true,
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:58511/",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:28538",
+      "sslPort": 44387
     }
   },
   "profiles": {
@@ -15,13 +16,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "SampleSite.Server": {
+    "SampleSite.Host": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:58512/"
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Blazor.Hosting;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Toolbelt.Blazor;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
@@ -14,6 +14,7 @@ namespace SampleSite.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
             builder.Services.AddHttpClientInterceptor();
+            builder.Services.AddBaseAddressHttpClient();
 
             var host = builder.Build();
             SubscribeHttpClientInterceptorEvents(host);
