@@ -21,7 +21,7 @@ namespace Toolbelt.Blazor
         /// </summary>
         public event EventHandler<HttpClientInterceptorEventArgs> AfterSend;
 
-        private HttpMessageHandler Handler;
+        private readonly HttpMessageHandler Handler;
 
         private readonly MethodInfo SendAsyncMethod;
 

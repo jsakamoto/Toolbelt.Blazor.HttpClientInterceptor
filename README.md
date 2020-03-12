@@ -81,6 +81,7 @@ void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
 
 ## Release Note
 
+- **v.8.0.1** - Fix: conflict "AddBaseAddressHttpClient()" service injection.
 - **v.8.0.0** - BREAKING CHANGE: Support Blazor v.3.2.0 Preview 2 (not compatible with v.3.2.0 Preview 1 or before.)
 - **v.7.0.0** - BREAKING CHANGE: Support Blazor v.3.2.0 Preview 1 (not compatible with v.3.1.0 Preview 4 or before.)
 - **v.6.1.0** - The event handler arguments now provides a request object and a response object.

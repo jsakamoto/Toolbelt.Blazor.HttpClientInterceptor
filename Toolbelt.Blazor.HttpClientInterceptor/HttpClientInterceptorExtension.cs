@@ -1,6 +1,5 @@
-﻿using System;
-using System.Net.Http;
-using Microsoft.AspNetCore.Components;
+﻿using System.Net.Http;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -17,22 +16,17 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
         /// <param name="services">The Microsoft.Extensions.DependencyInjection.IServiceCollection to add the service to.</param>
         public static void AddHttpClientInterceptor(this IServiceCollection services)
         {
-            var baseHandlerType = Type.GetType("WebAssembly.Net.Http.HttpClient.WasmHttpMessageHandler,WebAssembly.Net.Http");
-            if (baseHandlerType == null) return;
-            var baseHandler = Activator.CreateInstance(baseHandlerType) as HttpMessageHandler;
-            if (baseHandler == null) return;
-
-            services.TryAddSingleton(_ => new HttpClientInterceptor(baseHandler));
-
-            services.RemoveAll<HttpClient>();
-            services.AddSingleton(delegate (IServiceProvider s)
+            services.TryAddSingleton(serviceProvider =>
             {
-                var naviManager = s.GetRequiredService<NavigationManager>();
-                var interceptor = s.GetRequiredService<HttpClientInterceptor>();
-                return new HttpClient(interceptor)
-                {
-                    BaseAddress = new Uri(naviManager.BaseUri)
-                };
+                var httpClient = serviceProvider.GetRequiredService<HttpClient>();
+                var handlerField = typeof(HttpMessageInvoker).GetField("_handler", BindingFlags.Instance | BindingFlags.NonPublic);
+                var baseHandler = handlerField?.GetValue(httpClient) as HttpMessageHandler;
+
+                var interceptor = new HttpClientInterceptor(baseHandler);
+                if (handlerField != null && baseHandler != null)
+                    handlerField.SetValue(httpClient, interceptor);
+
+                return interceptor;
             });
         }
     }
