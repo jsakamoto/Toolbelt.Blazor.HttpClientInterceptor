@@ -22,7 +22,7 @@
     {
         try
         {
-            await HttpClient.GetJsonAsync<object>("/api/notfound.xml");
+            await HttpClient.GetAsync("/api/notfound.xml");
         }
         catch (Exception e)
         {
