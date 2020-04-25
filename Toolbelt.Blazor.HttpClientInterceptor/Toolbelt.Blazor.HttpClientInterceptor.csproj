@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/</PackageProjectUrl>
     <Description>Intercept all of the sending HTTP requests on a client side Blazor application.</Description>
     <PackageTags>blazor,http,httpclient</PackageTags>
-    <Version>8.0.1.0</Version>
+    <Version>9.0.0.0</Version>
     <PackageReleaseNotes>v.8.0.1
 - Fix: conflict "AddBaseAddressHttpClient()" service injection.
 v.8.0.0
