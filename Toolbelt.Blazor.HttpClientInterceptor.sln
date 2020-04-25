@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{CF03D4A5-B3D2-4DFD-A7E5-62A7F23B8F78}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		RELEASE-NOTES.txt = RELEASE-NOTES.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleSites", "SampleSites", "{32F9D431-91F5-4CE7-925B-4A5B4288C983}"
@@ -15,6 +16,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleSite.Client", "SampleSite\Client\SampleSite.Client.csproj", "{519D3ED6-13B9-4BB2-BC10-BA58ACBF0864}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleSite.Host", "SampleSite\Host\SampleSite.Host.csproj", "{E7E94DDB-483E-49D0-A151-9543C8E0C8A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AD9920F0-33D1-46DC-B666-647B41BAD699}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
