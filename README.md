@@ -6,7 +6,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 
 ## Supported Blazor versions
 
-"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.8.x supports Blazor WebAssembly App version **3.2 Preview 2~4.**
+"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.9.x supports Blazor WebAssembly App version **3.2 Preview 2~5.**
 
 ## How to install and use?
 
@@ -28,6 +28,20 @@ public class Program
     var builder = WebAssemblyHostBuilder.CreateDefault(args);
     builder.RootComponents.Add<App>("app");
     builder.Services.AddHttpClientInterceptor(); // <- Add this!
+    ...
+```
+
+**Step.3** Add invoking `EnableIntercept(IServiceProvider)` extension method when registration of `HttpClient` as a transient service to DI container.
+
+```csharp
+public class Program
+{
+  public static async Task Main(string[] args)
+  {
+    ...
+    builder.Services.AddTransient(sp => new HttpClient { 
+      BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) 
+    }.EnableIntercept(sp)); // <- Add this!
     ...
 ```
 
@@ -79,19 +93,9 @@ void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
 }
 ```
 
-## Release Note
+## Release Notes
 
-- **v.8.0.1** - Fix: conflict "AddBaseAddressHttpClient()" service injection.
-- **v.8.0.0** - BREAKING CHANGE: Support Blazor v.3.2.0 Preview 2 (not compatible with v.3.2.0 Preview 1 or before.)
-- **v.7.0.0** - BREAKING CHANGE: Support Blazor v.3.2.0 Preview 1 (not compatible with v.3.1.0 Preview 4 or before.)
-- **v.6.1.0** - The event handler arguments now provides a request object and a response object.
-- **v.6.0.0** - BREAKING CHANGE: Support Blazor v.3.1.0 Preview 3 (not compatible with v.3.1.0 Preview 2 or before.)
-- **v.5.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 6 (not compatible with v.3.0.0 Preview 5 or before.)
-- **v.4.0.0** - BREAKING CHANGE: Support Blazor v.3.0.0 Preview 4 (not compatible with v.0.9.0 or before.)
-- **v.3.0.0** - BREAKING CHANGE: Support Blazor v.0.8.0 (not compatible with v.0.7.0 or before.)
-- **v.2.1.0** - Support Blazor v.0.6.0 - it was signed strong name.
-- **v.2.0.0** - BREAKING CHANGE: Fix namespace of HttpClientInterceptorExtension class.
-- **v.1.0.0** - 1st release.
+Release notes is [here.](https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/blob/master/RELEASE-NOTES.txt)
 
 ## License
 
