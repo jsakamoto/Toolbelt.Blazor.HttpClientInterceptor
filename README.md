@@ -6,7 +6,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 
 ## Supported Blazor versions
 
-"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.9.x supports Blazor WebAssembly App version **3.2 Preview 2~5.**
+"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.9.x supports Blazor WebAssembly App version **3.2 Preview 2~5, and Release Candidate 1.**
 
 ## How to install and use?
 
