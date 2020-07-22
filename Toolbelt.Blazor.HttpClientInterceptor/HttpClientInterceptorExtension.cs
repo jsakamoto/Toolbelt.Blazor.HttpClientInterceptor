@@ -23,7 +23,15 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
             {
                 if (HandlerField != null)
                 {
-                    var httpClient = services.GetService<HttpClient>();
+                    var httpClient = default(HttpClient);
+                    try
+                    {
+                        httpClient = services.GetService<HttpClient>();
+                    }
+                    catch (InvalidOperationException e) when (e.Source == "Microsoft.Extensions.DependencyInjection" && e.HResult == -2146233079)
+                    {
+                    }
+
                     if (httpClient != null)
                     {
                         httpClient.EnableIntercept(services);
