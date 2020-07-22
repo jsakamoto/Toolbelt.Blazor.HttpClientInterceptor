@@ -16,7 +16,7 @@ namespace SampleSite.Client
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddHttpClientInterceptor();
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) }.EnableIntercept(sp));
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) }.EnableIntercept(sp));
 
             var host = builder.Build();
             SubscribeHttpClientInterceptorEvents(host);
