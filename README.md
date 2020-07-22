@@ -6,7 +6,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 
 ## Supported Blazor versions
 
-"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.9.x supports Blazor WebAssembly App version **3.2 Preview 2~5, and Release Candidate 1.**
+"Blazor WebAssembly App (client-side) HttpClient Interceptor" ver.9.x supports Blazor WebAssembly App version 3.2 Preview 2+, and Release Candidates, **and of course, 3.2.x official release is also supported.**
 
 ## How to install and use?
 
@@ -31,7 +31,7 @@ public class Program
     ...
 ```
 
-**Step.3** Add invoking `EnableIntercept(IServiceProvider)` extension method when registration of `HttpClient` as a transient service to DI container.
+**Step.3** Add invoking `EnableIntercept(IServiceProvider)` extension method at the registration of `HttpClient` to DI container.
 
 ```csharp
 public class Program
@@ -39,7 +39,7 @@ public class Program
   public static async Task Main(string[] args)
   {
     ...
-    builder.Services.AddTransient(sp => new HttpClient { 
+    builder.Services.AddScoped(sp => new HttpClient { 
       BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) 
     }.EnableIntercept(sp)); // <- Add this!
     ...
