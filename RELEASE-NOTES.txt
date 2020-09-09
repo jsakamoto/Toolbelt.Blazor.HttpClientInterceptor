@@ -1,3 +1,6 @@
+v.9.1.0
+- Add the "GetCapturedContentAsync()" method to the 'AfterSend' event argument object.
+
 v.9.0.1
 - Fix: it throws an unhandled exception when HttpClient is registered as a scoped service.
 

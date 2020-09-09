@@ -38,7 +38,9 @@ namespace Toolbelt.Blazor
             }
             finally
             {
-                this.Interceptor.InvokeAfterSend(new HttpClientInterceptorEventArgs(request, response));
+                var args = new HttpClientInterceptorEventArgs(request, response);
+                this.Interceptor.InvokeAfterSend(args);
+                await args._AsyncTask;
             }
         }
 

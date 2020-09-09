@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -38,11 +39,22 @@ namespace SampleSite.Client
             Console.WriteLine($"  - {args.Request.Method} {args.Request.RequestUri}");
         }
 
-        private static void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
+        private static async void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
         {
             Console.WriteLine("AfterSend event of HttpClientInterceptor");
             Console.WriteLine($"  - {args.Request.Method} {args.Request.RequestUri}");
             Console.WriteLine($"  - HTTP Status {args.Response?.StatusCode}");
+
+            var capturedContent = await args.GetCapturedContentAsync();
+
+            Console.WriteLine($"  - Content Headers");
+            foreach (var headerText in capturedContent.Headers.Select(h => $"{h.Key}: {string.Join(", ", h.Value)}"))
+            {
+                Console.WriteLine($"    - {headerText}");
+            }
+
+            var httpContentString = await capturedContent.ReadAsStringAsync();
+            Console.WriteLine($"  - HTTP Content \"{httpContentString}\"");
         }
     }
 }
