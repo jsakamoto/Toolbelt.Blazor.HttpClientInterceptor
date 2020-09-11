@@ -93,6 +93,28 @@ void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
 }
 ```
 
+### To read the content at "AfterSend" event handler
+
+If you want to read the content in the `Response` object, don't reference the `Response.Content` property directly to do it.
+
+Instead, please use the return value of the `GetCapturedContentAsync()` method.
+
+> _Note:_ Please remember that the `GetCapturedContentAsync()` method has a little bit performance penalty.  
+> Because in the `GetCapturedContentAsync()` method, the `LoadIntoBufferAsync()` method of the `Response.Content` property is invoked.
+
+```csharp
+void async OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
+{
+  // 👇 Don't reference "args.Response.Content" directly to read the content.
+  // var content = await args.Response.Content.ReadAsStringAsync()
+
+  // 👇 Instead, please use the return value of the "GetCapturedContentAsync()" method.
+  var capturedContent = await arg.GetCapturedContentAsync();
+  var content = await capturedContent.ReadAsStringAsync();
+  ...
+```
+
+
 ## Release Notes
 
 Release notes is [here.](https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/blob/master/RELEASE-NOTES.txt)
