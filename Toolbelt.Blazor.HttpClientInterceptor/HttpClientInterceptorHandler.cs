@@ -32,14 +32,14 @@ namespace Toolbelt.Blazor
             var response = default(HttpResponseMessage);
             try
             {
-                this.Interceptor.InvokeBeforeSend(new HttpClientInterceptorEventArgs(request, response));
+                await this.Interceptor.InvokeBeforeSendAsync(new HttpClientInterceptorEventArgs(request, response));
                 response = await (SendAsyncMethod.Invoke(this.BaseHandler, new object[] { request, cancellationToken }) as Task<HttpResponseMessage>);
                 return response;
             }
             finally
             {
                 var args = new HttpClientInterceptorEventArgs(request, response);
-                this.Interceptor.InvokeAfterSend(args);
+                await this.Interceptor.InvokeAfterSendAsync(args);
                 await args._AsyncTask;
             }
         }
