@@ -1,3 +1,6 @@
+v.9.2.0
+- Add async version events "BeforeSendAsync" and "AfterSendAsync".
+
 v.9.1.0
 - Add the "GetCapturedContentAsync()" method to the 'AfterSend' event argument object.
 
