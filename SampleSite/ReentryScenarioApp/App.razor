@@ -1,0 +1,15 @@
+﻿@inject HttpClient HttpClient
+@inject FooService Foo
+
+<div>
+    <button @onclick="OnClickInvoke">Invoke</button>
+</div>
+
+@code {
+
+    private async Task OnClickInvoke()
+    {
+        var sampleTextA = await HttpClient.GetStringAsync("content/sample-text-A.txt");
+        Console.WriteLine($"Sample Text A: {sampleTextA}");
+    }
+}
