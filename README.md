@@ -67,7 +67,9 @@ You can subscribe the events that will occur before/after sending all of the HTT
   ...
 ```
 
-> _Note:_ Please remember that if you use `HttpClientInterceptor` to subscribe `BeforeSend`/`AfterSend` events **in Blazor components (.razor),** you should unsubscribe events when the components is discarded. To do it, you should implement `IDisposable` interface in that component, like this code:
+If you want to do async operations inside the event handler, please subscribe async version events such as `BeforeSendAsync` and `AfterSendAsync`, instead of `BeforeSend` and `AfterSend`.
+
+> _Note:_ Please remember that if you use `HttpClientInterceptor` to subscribe `BeforeSend`/`BeforeSendAsync`/`AfterSend`/`AfterSendAsync` events **in Blazor components (.razor),** you should unsubscribe events when the components is discarded. To do it, you should implement `IDisposable` interface in that component, like this code:
 
 ```csharp
 @implements IDisposable
@@ -80,7 +82,7 @@ public void Dispose()
 
 ### The arguments of event handler
 
-The event handler for `BeforeSend`/`AfterSend` events can be received `HttpClientInterceptorEventArgs` object.
+The event handler for `BeforeSend`/`BeforeSendAsync`/`AfterSend`/`AfterSendAsync` events can be received `HttpClientInterceptorEventArgs` object.
 
 The `HttpClientInterceptorEventArgs` object provides you to a request object and a response object that is come from an intercepted HttpClinet request.
 
@@ -93,17 +95,17 @@ void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
 }
 ```
 
-### To read the content at "AfterSend" event handler
+### To read the content at "AfterSendAsync" event handler
 
-If you want to read the content in the `Response` object, don't reference the `Response.Content` property directly to do it.
+If you want to read the content in the `Response` object at the event handler for `AfterSendAsync` event, **don't** reference the `Response.Content` property **directly** to do it.
 
-Instead, please use the return value of the `GetCapturedContentAsync()` method.
+Instead, please **use the return value of the `GetCapturedContentAsync()` method.**
 
 > _Note:_ Please remember that the `GetCapturedContentAsync()` method has a little bit performance penalty.  
 > Because in the `GetCapturedContentAsync()` method, the `LoadIntoBufferAsync()` method of the `Response.Content` property is invoked.
 
 ```csharp
-void async OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
+async Task OnAfterSendAsync(object sender, HttpClientInterceptorEventArgs args)
 {
   // 👇 Don't reference "args.Response.Content" directly to read the content.
   // var content = await args.Response.Content.ReadAsStringAsync()
