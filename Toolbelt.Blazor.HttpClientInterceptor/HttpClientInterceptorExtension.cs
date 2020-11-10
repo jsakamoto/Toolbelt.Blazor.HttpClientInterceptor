@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,14 +45,10 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
 
         public static HttpClient EnableIntercept(this HttpClient httpClient, IServiceProvider services)
         {
-            if (HandlerField != null)
+            if (HandlerField?.GetValue(httpClient) is HttpMessageHandler baseHandler && !(baseHandler is HttpClientInterceptorHandler))
             {
-                var baseHandler = HandlerField?.GetValue(httpClient) as HttpMessageHandler;
-                if (baseHandler != null)
-                {
-                    var interceptorHandler = new HttpClientInterceptorHandler(services, baseHandler);
-                    HandlerField.SetValue(httpClient, interceptorHandler);
-                }
+                var interceptorHandler = new HttpClientInterceptorHandler(services, baseHandler);
+                HandlerField.SetValue(httpClient, interceptorHandler);
             }
             return httpClient;
         }
