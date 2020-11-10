@@ -1,7 +1,9 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
+using Toolbelt.Blazor.Test.Internals;
 using Xunit;
 
 namespace Toolbelt.Blazor.Test
@@ -54,6 +56,28 @@ namespace Toolbelt.Blazor.Test
         public void No_HttpClient_Registration_Test()
         {
             GetServiceTest(/* doesn't register HttpClient to DI container. */);
+        }
+
+        [Fact]
+        public async Task EventCount_with_SingleTonHttpClient_Test()
+        {
+            var services = new ServiceCollection();
+            services.AddHttpClientInterceptor();
+            services.AddSingleton<HttpClient>(sp => new HttpClient(new NullHttpMessageHandler()).EnableIntercept(sp));
+
+            using var serviceProvider = services.BuildServiceProvider(validateScopes: true);
+            var httpClientInterceptor = serviceProvider.GetService<HttpClientInterceptor>();
+
+            var countOfBeforeSend = 0;
+            var countOfAfterSend = 0;
+            httpClientInterceptor.BeforeSend += (_, __) => countOfBeforeSend++;
+            httpClientInterceptor.AfterSend += (_, __) => countOfAfterSend++;
+
+            var httpClient = serviceProvider.GetService<HttpClient>();
+            await httpClient.GetAsync("http://example.com/foo/bar");
+
+            countOfBeforeSend.Is(1);
+            countOfAfterSend.Is(1);
         }
     }
 }
