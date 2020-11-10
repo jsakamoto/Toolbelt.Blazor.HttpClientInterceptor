@@ -1,3 +1,6 @@
+v.9.2.1
+- Fix: BeforeSend/AfterSend events are invoked twice in some cases.
+
 v.9.2.0
 - Add async version events "BeforeSendAsync" and "AfterSendAsync".
 
