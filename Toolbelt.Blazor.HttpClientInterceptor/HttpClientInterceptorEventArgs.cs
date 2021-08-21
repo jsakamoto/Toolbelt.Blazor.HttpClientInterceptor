@@ -40,12 +40,11 @@ namespace Toolbelt.Blazor
         /// </summary>
         /// <param name="request">Request</param>
         /// <param name="response">Response</param>
-        /// <param name="cancel">Set to true to cancel request</param>
-        public HttpClientInterceptorEventArgs(HttpRequestMessage request, HttpResponseMessage response, bool cancel = false)
+        public HttpClientInterceptorEventArgs(HttpRequestMessage request, HttpResponseMessage response)
         {
             this.Request = request;
             this.Response = response;
-            this.Cancel = cancel;
+            this.Cancel = false;
         }
 
         /// <summary>
