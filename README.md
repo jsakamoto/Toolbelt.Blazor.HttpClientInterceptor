@@ -116,6 +116,21 @@ async Task OnAfterSendAsync(object sender, HttpClientInterceptorEventArgs args)
   ...
 ```
 
+### Cancel a request before sending
+
+If you want to cancel the request before sending it, you can do it by setting `false` to the `Cancel` property of the `BeforeSend`/`BeforeSendAsync` event argument.
+
+```csharp
+void OnBeforeSend(object sender, HttpClientInterceptorEventArgs args)
+{
+  if (/*something wron*/) {
+    // 👇 Setting the "Cancel" to true will cancel sending a request.
+    args.Cancel = true;
+  }
+}
+```
+
+In that case, a HttpClient object will return the HttpResponseMessage object with HTTP status code **"NoContent" (HTTP 204)** to the caller, and also the `AfterSend`/`AfterSendAsync` event will not be fired.
 
 ## Release Notes
 
