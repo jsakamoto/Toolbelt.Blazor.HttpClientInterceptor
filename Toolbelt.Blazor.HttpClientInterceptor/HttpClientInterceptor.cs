@@ -7,7 +7,7 @@ namespace Toolbelt.Blazor
     /// <summary>
     /// Intercept all of the sending HTTP requests on a client side Blazor application.
     /// </summary>
-    public class HttpClientInterceptor
+    public class HttpClientInterceptor : IHttpClientInterceptor
     {
         /// <summary>
         /// Occurs before a HTTP request sending.

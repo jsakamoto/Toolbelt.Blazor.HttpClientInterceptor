@@ -41,6 +41,12 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
 
                 return new HttpClientInterceptor();
             });
+
+            services.TryAddSingleton(services =>
+            {
+                var interceptor = services.GetService<HttpClientInterceptor>();
+                return (IHttpClientInterceptor)interceptor;
+            });
         }
 
         public static HttpClient EnableIntercept(this HttpClient httpClient, IServiceProvider services)
