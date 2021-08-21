@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading;
@@ -30,17 +31,28 @@ namespace Toolbelt.Blazor
                 this.Interceptor = this.Services.GetService<HttpClientInterceptor>();
             }
             var response = default(HttpResponseMessage);
+            var args = new HttpClientInterceptorEventArgs(request, response);
             try
             {
-                await this.Interceptor.InvokeBeforeSendAsync(new HttpClientInterceptorEventArgs(request, response));
-                response = await (SendAsyncMethod.Invoke(this.BaseHandler, new object[] { request, cancellationToken }) as Task<HttpResponseMessage>);
+                await this.Interceptor.InvokeBeforeSendAsync(args);
+                if (args.Cancel)
+                {
+                    response = new HttpResponseMessage(HttpStatusCode.NoContent);
+                }
+                else
+                {
+                    response = await (SendAsyncMethod.Invoke(this.BaseHandler, new object[] { request, cancellationToken }) as Task<HttpResponseMessage>);
+                }
                 return response;
             }
             finally
             {
-                var args = new HttpClientInterceptorEventArgs(request, response);
-                await this.Interceptor.InvokeAfterSendAsync(args);
-                await args._AsyncTask;
+                if (!args.Cancel)
+                {
+                    var argsAfter = new HttpClientInterceptorEventArgs(request, response);
+                    await this.Interceptor.InvokeAfterSendAsync(argsAfter);
+                    await args._AsyncTask;
+                }
             }
         }
 

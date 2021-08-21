@@ -24,6 +24,11 @@ namespace Toolbelt.Blazor
         /// </summary>
         public HttpResponseMessage Response { get; }
 
+        /// <summary>
+        /// Cancel sending HTTP request
+        /// </summary>
+        public bool Cancel { get; set; }
+
         private byte[] _CapturedContentBytes;
 
         private HttpContentHeaders _CapturedContentHeaders;
@@ -33,10 +38,14 @@ namespace Toolbelt.Blazor
         /// <summary>
         /// Provides data for the event that is raised when before or after sending HTTP request.
         /// </summary>
-        public HttpClientInterceptorEventArgs(HttpRequestMessage request, HttpResponseMessage response)
+        /// <param name="request">Request</param>
+        /// <param name="response">Response</param>
+        /// <param name="cancel">Set to true to cancel request</param>
+        public HttpClientInterceptorEventArgs(HttpRequestMessage request, HttpResponseMessage response, bool cancel = false)
         {
             this.Request = request;
             this.Response = response;
+            this.Cancel = cancel;
         }
 
         /// <summary>

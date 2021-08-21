@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,6 +79,37 @@ namespace Toolbelt.Blazor.Test
 
             countOfBeforeSend.Is(1);
             countOfAfterSend.Is(1);
+        }
+
+        [Theory]
+        [InlineData(true, 0, HttpStatusCode.BadRequest)]
+        [InlineData(false, 1, HttpStatusCode.NoContent)]
+        public async Task CancelRequest_Test(
+            bool cancel, 
+            int countOfAfterSendExpected, 
+            HttpStatusCode responseStatusCodeExpected)
+        {
+            var services = new ServiceCollection();
+            services.AddHttpClientInterceptor();
+            services.AddSingleton<HttpClient>(sp => new HttpClient(new NullHttpMessageHandler()).EnableIntercept(sp));
+
+            using var serviceProvider = services.BuildServiceProvider(validateScopes: true);
+            var httpClientInterceptor = serviceProvider.GetService<HttpClientInterceptor>();
+
+            var response = new HttpResponseMessage(HttpStatusCode.BadRequest); // set to BadRequest for test purpose
+            var countOfAfterSend = 0;
+            httpClientInterceptor.BeforeSend += (_, args) => args.Cancel = cancel;
+            httpClientInterceptor.AfterSend += (_, args) => 
+            {
+                countOfAfterSend++;
+                response = args.Response; 
+            };
+
+            var httpClient = serviceProvider.GetService<HttpClient>();
+            await httpClient.GetAsync("http://example.com/foo/bar");
+
+            countOfAfterSend.Is(countOfAfterSendExpected);
+            response.StatusCode.Is(responseStatusCodeExpected);
         }
     }
 }
