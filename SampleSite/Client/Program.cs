@@ -27,8 +27,8 @@ namespace SampleSite.Client
 
         private static void SubscribeHttpClientInterceptorEvents(WebAssemblyHost host)
         {
-            // Subscribe HttpClientInterceptor's events.
-            var httpInterceptor = host.Services.GetService<HttpClientInterceptor>();
+            // Subscribe IHttpClientInterceptor's events.
+            var httpInterceptor = host.Services.GetService<IHttpClientInterceptor>();
             httpInterceptor.BeforeSend += OnBeforeSend;
             httpInterceptor.AfterSend += OnAfterSend;
         }

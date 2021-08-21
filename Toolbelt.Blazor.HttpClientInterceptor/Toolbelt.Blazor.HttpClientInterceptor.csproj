@@ -11,11 +11,12 @@
     <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/</PackageProjectUrl>
     <Description>Intercept all of the sending HTTP requests on a client side Blazor application.</Description>
     <PackageTags>blazor,http,httpclient</PackageTags>
-    <Version>9.2.1</Version>
+    <Version>10.0.0-preview.1</Version>
     <PackageReleaseNotes>(Please write the package release notes in "../RELEASE-NOTES.txt")</PackageReleaseNotes>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <PackageOutputPath>../_dist</PackageOutputPath>
     <PackageIcon>nupkg-icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,10 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.assets\nupkg-icon.png" Visible="false">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\.assets\nupkg-icon.png" Visible="false" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Visible="false" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <Target Name="BuildPackageReleaseNotes" BeforeTargets="GenerateNuspec">

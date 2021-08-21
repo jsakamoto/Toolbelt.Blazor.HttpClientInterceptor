@@ -16,7 +16,7 @@ The class library that intercept all of the sending HTTP requests on a client si
 > dotnet add package Toolbelt.Blazor.HttpClientInterceptor
 ```
 
-**Step.2** Register "HttpClientInterceptor" service into the DI container, at `Main()` method in the `Program` class of your Blazor application.
+**Step.2** Register `IHttpClientInterceptor` service into the DI container, at `Main()` method in the `Program` class of your Blazor application.
 
 ```csharp
 using Toolbelt.Blazor.Extensions.DependencyInjection; // <- Add this, and...
@@ -47,11 +47,11 @@ public class Program
 
 That's all.
 
-You can subscribe the events that will occur before/after sending all of the HTTP requests, at anywhere you can get HttpClientInterceptor service from the DI container.
+You can subscribe the events that will occur before/after sending all of the HTTP requests, at anywhere you can get `IHttpClientInterceptor` service from the DI container.
 
 ```csharp
 @using Toolbelt.Blazor
-@inject HttpClientInterceptor Interceptor
+@inject IHttpClientInterceptor Interceptor
 ...
 @code {
   protected override void OnInitialized()
@@ -69,7 +69,7 @@ You can subscribe the events that will occur before/after sending all of the HTT
 
 If you want to do async operations inside the event handler, please subscribe async version events such as `BeforeSendAsync` and `AfterSendAsync`, instead of `BeforeSend` and `AfterSend`.
 
-> _Note:_ Please remember that if you use `HttpClientInterceptor` to subscribe `BeforeSend`/`BeforeSendAsync`/`AfterSend`/`AfterSendAsync` events **in Blazor components (.razor),** you should unsubscribe events when the components is discarded. To do it, you should implement `IDisposable` interface in that component, like this code:
+> _Note:_ Please remember that if you use `IHttpClientInterceptor` to subscribe `BeforeSend`/`BeforeSendAsync`/`AfterSend`/`AfterSendAsync` events **in Blazor components (.razor),** you should unsubscribe events when the components is discarded. To do it, you should implement `IDisposable` interface in that component, like this code:
 
 ```csharp
 @implements IDisposable
