@@ -30,7 +30,7 @@ namespace SampleSite.Client
             // Subscribe IHttpClientInterceptor's events.
             var httpInterceptor = host.Services.GetService<IHttpClientInterceptor>();
             httpInterceptor.BeforeSend += OnBeforeSend;
-            httpInterceptor.AfterSend += OnAfterSend;
+            httpInterceptor.AfterSendAsync += OnAfterSendAsync;
         }
 
         private static void OnBeforeSend(object sender, HttpClientInterceptorEventArgs args)
@@ -39,7 +39,7 @@ namespace SampleSite.Client
             Console.WriteLine($"  - {args.Request.Method} {args.Request.RequestUri}");
         }
 
-        private static async void OnAfterSend(object sender, HttpClientInterceptorEventArgs args)
+        private static async Task OnAfterSendAsync(object sender, HttpClientInterceptorEventArgs args)
         {
             Console.WriteLine("AfterSend event of HttpClientInterceptor");
             Console.WriteLine($"  - {args.Request.Method} {args.Request.RequestUri}");
