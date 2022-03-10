@@ -1,3 +1,6 @@
+v.10.1.0
+- Improve: The HttpClientInterceptorEventArgs class includes the exception object if an HTTP request has thrown an exception.
+
 v.10.0.0
 - Add the interface "IHttpClientInterceptor" for mocking purpose.
 - Add the ability to cancel sending a request at the "BeforeSend" event.

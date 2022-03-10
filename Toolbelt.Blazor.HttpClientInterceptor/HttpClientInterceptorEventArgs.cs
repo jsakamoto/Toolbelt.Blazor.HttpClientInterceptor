@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -25,6 +26,11 @@ namespace Toolbelt.Blazor
         public HttpResponseMessage Response { get; }
 
         /// <summary>
+        /// The exception object if an HTTP request has thrown an exception.
+        /// </summary>
+        public Exception Exception { get; }
+
+        /// <summary>
         /// Cancel sending HTTP request
         /// </summary>
         public bool Cancel { get; set; }
@@ -40,10 +46,30 @@ namespace Toolbelt.Blazor
         /// </summary>
         /// <param name="request">Request</param>
         /// <param name="response">Response</param>
-        public HttpClientInterceptorEventArgs(HttpRequestMessage request, HttpResponseMessage response)
+        [Obsolete, EditorBrowsable(EditorBrowsableState.Never)]
+        public HttpClientInterceptorEventArgs(HttpRequestMessage request, HttpResponseMessage response) : this(request, response, exception: null)
+        {
+        }
+
+        /// <summary>
+        /// Provides data for the event that is raised when before sending HTTP request.
+        /// </summary>
+        /// <param name="request">Request</param>
+        public HttpClientInterceptorEventArgs(HttpRequestMessage request) : this(request, response: null, exception: null)
+        {
+        }
+
+        /// <summary>
+        /// Provides data for the event that is raised when after sending HTTP request.
+        /// </summary>
+        /// <param name="request">Request</param>
+        /// <param name="response">Response</param>
+        /// <param name="exception">The exception object if an HTTP request has thrown an exception.</param>
+        public HttpClientInterceptorEventArgs(HttpRequestMessage request, HttpResponseMessage response, Exception exception)
         {
             this.Request = request;
             this.Response = response;
+            this.Exception = exception;
             this.Cancel = false;
         }
 
@@ -56,14 +82,14 @@ namespace Toolbelt.Blazor
         {
             if (this.Response == null) throw new InvalidOperationException("You can call GetCapturedContentAsync() only when \"AfterSend\" event is fired.");
 
-            if (_CapturedContentBytes == null)
+            if (this._CapturedContentBytes == null)
             {
-                _AsyncTask = CaptureContentAsync();
-                await _AsyncTask;
+                this._AsyncTask = this.CaptureContentAsync();
+                await this._AsyncTask;
             }
 
-            var httpContent = new ReadOnlyMemoryContent(_CapturedContentBytes);
-            foreach (var contentHeader in _CapturedContentHeaders)
+            var httpContent = new ReadOnlyMemoryContent(this._CapturedContentBytes);
+            foreach (var contentHeader in this._CapturedContentHeaders)
             {
                 httpContent.Headers.Add(contentHeader.Key, contentHeader.Value);
             }
@@ -72,12 +98,12 @@ namespace Toolbelt.Blazor
 
         private async Task CaptureContentAsync()
         {
-            await Response.Content.LoadIntoBufferAsync();
+            await this.Response.Content.LoadIntoBufferAsync();
 
-            _CapturedContentHeaders = Response.Content.Headers;
+            this._CapturedContentHeaders = this.Response.Content.Headers;
 
-            _CapturedContentBytes = await Response.Content.ReadAsByteArrayAsync();
-            var stream = await Response.Content.ReadAsStreamAsync();
+            this._CapturedContentBytes = await this.Response.Content.ReadAsByteArrayAsync();
+            var stream = await this.Response.Content.ReadAsStreamAsync();
             stream.Seek(0, SeekOrigin.Begin);
         }
     }

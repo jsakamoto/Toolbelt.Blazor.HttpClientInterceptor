@@ -31,7 +31,8 @@ namespace Toolbelt.Blazor
                 this.Interceptor = this.Services.GetService<HttpClientInterceptor>();
             }
             var response = default(HttpResponseMessage);
-            var args = new HttpClientInterceptorEventArgs(request, response);
+            var exception = default(Exception);
+            var args = new HttpClientInterceptorEventArgs(request);
             try
             {
                 await this.Interceptor.InvokeBeforeSendAsync(args);
@@ -45,11 +46,16 @@ namespace Toolbelt.Blazor
                 }
                 return response;
             }
+            catch (Exception e)
+            {
+                exception = e;
+                throw;
+            }
             finally
             {
                 if (!args.Cancel)
                 {
-                    var argsAfter = new HttpClientInterceptorEventArgs(request, response);
+                    var argsAfter = new HttpClientInterceptorEventArgs(request, response, exception);
                     await this.Interceptor.InvokeAfterSendAsync(argsAfter);
                     await args._AsyncTask;
                 }
@@ -58,7 +64,7 @@ namespace Toolbelt.Blazor
 
         protected override void Dispose(bool disposing)
         {
-            BaseHandler?.Dispose();
+            this.BaseHandler?.Dispose();
             base.Dispose(disposing);
         }
     }
