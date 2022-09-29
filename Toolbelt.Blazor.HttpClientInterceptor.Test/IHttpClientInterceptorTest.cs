@@ -13,6 +13,7 @@ namespace Toolbelt.Blazor.Test
         private void GetServiceTest(Action<IServiceCollection> configure = null)
         {
             var services = new ServiceCollection();
+            services.AddLogging();
             services.AddHttpClientInterceptor();
 
             configure?.Invoke(services);
@@ -28,7 +29,7 @@ namespace Toolbelt.Blazor.Test
         [Fact]
         public void HttpClient_as_a_Singleton_Test()
         {
-            GetServiceTest(configure: services =>
+            this.GetServiceTest(configure: services =>
             {
                 services.AddSingleton<HttpClient>(sp => new HttpClient());
             });
@@ -37,7 +38,7 @@ namespace Toolbelt.Blazor.Test
         [Fact]
         public void HttpClient_as_a_Transient_Test()
         {
-            GetServiceTest(configure: services =>
+            this.GetServiceTest(configure: services =>
             {
                 services.AddTransient<HttpClient>(sp => new HttpClient());
             });
@@ -46,7 +47,7 @@ namespace Toolbelt.Blazor.Test
         [Fact]
         public void HttpClient_as_a_Scoped_Test()
         {
-            GetServiceTest(configure: services =>
+            this.GetServiceTest(configure: services =>
             {
                 services.AddScoped<HttpClient>(sp => new HttpClient());
             });
@@ -55,13 +56,14 @@ namespace Toolbelt.Blazor.Test
         [Fact]
         public void No_HttpClient_Registration_Test()
         {
-            GetServiceTest(/* doesn't register HttpClient to DI container. */);
+            this.GetServiceTest(/* doesn't register HttpClient to DI container. */);
         }
 
         [Fact]
         public async Task EventCount_with_SingleTonHttpClient_Test()
         {
             var services = new ServiceCollection();
+            services.AddLogging();
             services.AddHttpClientInterceptor();
             services.AddSingleton<HttpClient>(sp => new HttpClient(new NullHttpMessageHandler()).EnableIntercept(sp));
 
