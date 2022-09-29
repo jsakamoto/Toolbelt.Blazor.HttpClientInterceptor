@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.Blazor.HttpClientInterceptor/</PackageProjectUrl>
     <Description>Intercept all of the sending HTTP requests on a client side Blazor application.</Description>
     <PackageTags>blazor,http,httpclient</PackageTags>
-    <Version>10.1.0</Version>
+    <Version>10.2.0</Version>
     <PackageReleaseNotes>(Please write the package release notes in "../RELEASE-NOTES.txt")</PackageReleaseNotes>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <PackageOutputPath>../_dist</PackageOutputPath>
