@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Toolbelt.Blazor
 {
@@ -40,6 +41,8 @@ namespace Toolbelt.Blazor
         private HttpContentHeaders _CapturedContentHeaders;
 
         internal Task _AsyncTask = Task.CompletedTask;
+
+        internal ILogger _Logger;
 
         /// <summary>
         /// Provides data for the event that is raised when before or after sending HTTP request.
@@ -91,7 +94,8 @@ namespace Toolbelt.Blazor
             var httpContent = new ReadOnlyMemoryContent(this._CapturedContentBytes);
             foreach (var contentHeader in this._CapturedContentHeaders)
             {
-                httpContent.Headers.Add(contentHeader.Key, contentHeader.Value);
+                try { httpContent.Headers.Add(contentHeader.Key, contentHeader.Value); }
+                catch (Exception ex) { this._Logger.LogWarning(ex, ex.Message); }
             }
             return httpContent;
         }

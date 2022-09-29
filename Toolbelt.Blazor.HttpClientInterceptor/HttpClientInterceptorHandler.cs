@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Toolbelt.Blazor
 {
@@ -18,10 +19,13 @@ namespace Toolbelt.Blazor
 
         private readonly HttpMessageHandler BaseHandler;
 
+        private readonly ILogger Logger;
+
         public HttpClientInterceptorHandler(IServiceProvider services, HttpMessageHandler baseHandler)
         {
             this.Services = services;
             this.BaseHandler = baseHandler;
+            this.Logger = services.GetRequiredService<ILogger<HttpClientInterceptor>>();
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -55,7 +59,7 @@ namespace Toolbelt.Blazor
             {
                 if (!args.Cancel)
                 {
-                    var argsAfter = new HttpClientInterceptorEventArgs(request, response, exception);
+                    var argsAfter = new HttpClientInterceptorEventArgs(request, response, exception) { _Logger = this.Logger };
                     await this.Interceptor.InvokeAfterSendAsync(argsAfter);
                     await args._AsyncTask;
                 }

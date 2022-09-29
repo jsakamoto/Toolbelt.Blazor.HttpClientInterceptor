@@ -1,3 +1,6 @@
+v.10.2.0
+- Improve: GetCapturedContentAsync() will proceed even if the response has illegal content headers.
+
 v.10.1.0
 - Improve: The HttpClientInterceptorEventArgs class includes the exception object if an HTTP request has thrown an exception.
 
