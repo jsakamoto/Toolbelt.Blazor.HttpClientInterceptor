@@ -21,7 +21,7 @@ namespace Toolbelt.Blazor
         /// <summary>
         /// The HttpResponseMessage object that is returned from HTTP request handler.<br/>
         /// This property is available only when "AfterSend" event is fired.
-        /// <para>[NOTICE]<br/>Don't retrive content from the "Response.Content" property directly.<br/>
+        /// <para>[NOTICE]<br/>Don't retrieve content from the "Response.Content" property directly.<br/>
         /// Instead, call the "GetCapturedContentAsync()" method of this event arguments object to do it.</para>
         /// </summary>
         public HttpResponseMessage Response { get; }
