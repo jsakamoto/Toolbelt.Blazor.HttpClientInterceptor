@@ -19,7 +19,7 @@ namespace Toolbelt.Blazor
 
         private readonly HttpMessageHandler BaseHandler;
 
-        private readonly ILogger Logger;
+        private readonly ILogger<HttpClientInterceptor> Logger;
 
         public HttpClientInterceptorHandler(IServiceProvider services, HttpMessageHandler baseHandler)
         {
@@ -46,7 +46,7 @@ namespace Toolbelt.Blazor
                 }
                 else
                 {
-                    response = await (SendAsyncMethod.Invoke(this.BaseHandler, new object[] { request, cancellationToken }) as Task<HttpResponseMessage>);
+                    response = await ((Task<HttpResponseMessage>)SendAsyncMethod.Invoke(this.BaseHandler, new object[] { request, cancellationToken }));
                 }
                 return response;
             }

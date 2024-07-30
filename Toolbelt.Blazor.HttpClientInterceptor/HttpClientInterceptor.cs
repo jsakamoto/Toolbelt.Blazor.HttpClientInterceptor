@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Toolbelt.Blazor
 {
     /// <summary>
-    /// Intercept all of the sending HTTP requests on a client side Blazor application.
+    /// Intercept all the sending HTTP requests on a client side Blazor application.
     /// </summary>
     public class HttpClientInterceptor : IHttpClientInterceptor
     {
@@ -20,12 +20,12 @@ namespace Toolbelt.Blazor
         public event HttpClientInterceptorEventHandler BeforeSendAsync;
 
         /// <summary>
-        /// Occurs after received a response of a HTTP request. (include it wasn't succeeded.)
+        /// Occurs after received a response of an HTTP request. (include it wasn't succeeded.)
         /// </summary>
         public event EventHandler<HttpClientInterceptorEventArgs> AfterSend;
 
         /// <summary>
-        /// Occurs after received a response of a HTTP request. (include it wasn't succeeded.)
+        /// Occurs after received a response of an HTTP request. (include it wasn't succeeded.)
         /// </summary>
         public event HttpClientInterceptorEventHandler AfterSendAsync;
 

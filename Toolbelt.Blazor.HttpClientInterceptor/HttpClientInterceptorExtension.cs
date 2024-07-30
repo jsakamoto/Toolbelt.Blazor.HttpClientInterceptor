@@ -12,7 +12,7 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
     /// </summary>
     public static class HttpClientInterceptorExtension
     {
-        private static readonly FieldInfo HandlerField = typeof(HttpMessageInvoker).GetField("_handler", BindingFlags.Instance | BindingFlags.NonPublic);
+        private static readonly FieldInfo? HandlerField = typeof(HttpMessageInvoker).GetField("_handler", BindingFlags.Instance | BindingFlags.NonPublic);
 
         /// <summary>
         ///  Adds a HttpClientInterceptor service to the specified Microsoft.Extensions.DependencyInjection.IServiceCollection.
@@ -22,22 +22,22 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
         {
             services.TryAddSingleton(services =>
             {
-                if (HandlerField != null)
+                if (HandlerField == null)
                 {
-                    var httpClient = default(HttpClient);
-                    try
-                    {
-                        httpClient = services.GetService<HttpClient>();
-                    }
-                    catch (InvalidOperationException e) when (e.Source == "Microsoft.Extensions.DependencyInjection" && e.HResult == -2146233079)
-                    {
-                    }
-
-                    if (httpClient != null)
-                    {
-                        httpClient.EnableIntercept(services);
-                    }
+                    return new HttpClientInterceptor();
                 }
+
+                var httpClient = default(HttpClient);
+                
+                try
+                {
+                    httpClient = services.GetService<HttpClient>();
+                }
+                catch (InvalidOperationException e) when (e.Source == "Microsoft.Extensions.DependencyInjection" && e.HResult == -2146233079)
+                {
+                }
+
+                httpClient?.EnableIntercept(services);
 
                 return new HttpClientInterceptor();
             });
@@ -45,6 +45,10 @@ namespace Toolbelt.Blazor.Extensions.DependencyInjection
             services.TryAddSingleton(services =>
             {
                 var interceptor = services.GetService<HttpClientInterceptor>();
+                if (interceptor == null)
+                {
+                    throw new NullReferenceException("HttpClientInterceptor is not registered. Please call AddHttpClientInterceptor() before AddHttpClientInterceptorHandler().");
+                }
                 return (IHttpClientInterceptor)interceptor;
             });
         }

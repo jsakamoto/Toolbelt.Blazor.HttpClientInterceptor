@@ -1,3 +1,9 @@
+v 10.3.0
+- The Library is now compatible with .NET 8 (and .NET 6).
+- Removed large dependency on Microsoft.AspNetCore.Components.WebAssembly package in favour of smaller Abstractions packages, this also fixed the warning people would get using dotnet 9 that says that multiple packages including System.Text.Json are vulnerable. 
+- Changed various internal code style to be more consistent with .NET 8 standards (only syntax no breaking changes).
+- Fixed some typos in documentation.
+
 v.10.2.0
 - Improve: GetCapturedContentAsync() will proceed even if the response has illegal content headers.
 
